@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDP.Domain", "TDP.Domain\TDP.Domain.csproj", "{A76239E2-AC0F-4489-BB02-4CBB48F32F6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDP.Main", "TDP.Main\TDP.Main.csproj", "{10FBEB6C-B983-48CE-B04B-450B233CFA58}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -33,5 +35,17 @@ Global
 		{A76239E2-AC0F-4489-BB02-4CBB48F32F6F}.Release|x64.Build.0 = Release|Any CPU
 		{A76239E2-AC0F-4489-BB02-4CBB48F32F6F}.Release|x86.ActiveCfg = Release|Any CPU
 		{A76239E2-AC0F-4489-BB02-4CBB48F32F6F}.Release|x86.Build.0 = Release|Any CPU
+		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Debug|x64.Build.0 = Debug|Any CPU
+		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Debug|x86.Build.0 = Debug|Any CPU
+		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Release|x64.ActiveCfg = Release|Any CPU
+		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Release|x64.Build.0 = Release|Any CPU
+		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Release|x86.ActiveCfg = Release|Any CPU
+		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
