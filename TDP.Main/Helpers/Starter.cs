@@ -6,7 +6,8 @@ public static class Starter
 {
     public static ServiceProvider Build()
     {
-        var services = new ServiceCollection(); 
+        var services = new ServiceCollection();
+        services.AddServices();
         return services.BuildServiceProvider();
     }
 }
