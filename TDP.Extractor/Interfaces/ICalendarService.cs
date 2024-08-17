@@ -1,6 +1,6 @@
 ﻿namespace TDP.Extractor;
 
-public class Class1
+public interface ICalendarService
 {
 
 }
