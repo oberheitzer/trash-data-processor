@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDP.Domain", "TDP.Domain\TD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDP.Main", "TDP.Main\TDP.Main.csproj", "{10FBEB6C-B983-48CE-B04B-450B233CFA58}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDP.Http", "TDP.Http\TDP.Http.csproj", "{89C0C26F-1D74-44E3-A03B-D180563D8D43}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,5 +49,17 @@ Global
 		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Release|x64.Build.0 = Release|Any CPU
 		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Release|x86.ActiveCfg = Release|Any CPU
 		{10FBEB6C-B983-48CE-B04B-450B233CFA58}.Release|x86.Build.0 = Release|Any CPU
+		{89C0C26F-1D74-44E3-A03B-D180563D8D43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89C0C26F-1D74-44E3-A03B-D180563D8D43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89C0C26F-1D74-44E3-A03B-D180563D8D43}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{89C0C26F-1D74-44E3-A03B-D180563D8D43}.Debug|x64.Build.0 = Debug|Any CPU
+		{89C0C26F-1D74-44E3-A03B-D180563D8D43}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{89C0C26F-1D74-44E3-A03B-D180563D8D43}.Debug|x86.Build.0 = Debug|Any CPU
+		{89C0C26F-1D74-44E3-A03B-D180563D8D43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89C0C26F-1D74-44E3-A03B-D180563D8D43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89C0C26F-1D74-44E3-A03B-D180563D8D43}.Release|x64.ActiveCfg = Release|Any CPU
+		{89C0C26F-1D74-44E3-A03B-D180563D8D43}.Release|x64.Build.0 = Release|Any CPU
+		{89C0C26F-1D74-44E3-A03B-D180563D8D43}.Release|x86.ActiveCfg = Release|Any CPU
+		{89C0C26F-1D74-44E3-A03B-D180563D8D43}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

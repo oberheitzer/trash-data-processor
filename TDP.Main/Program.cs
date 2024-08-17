@@ -1,5 +1,7 @@
 ﻿using TDP.Main.Helpers;
 
+_ = Starter.Build();
+
 Communicator.Introduce();
 Communicator.DisplayMenu();
 
