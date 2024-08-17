@@ -8,8 +8,7 @@ public static class ServiceCollectionExtension
 {
     public static ServiceCollection AddServices(this ServiceCollection services)
     {
-        services.AddSingleton<IWasteService, WasteService>();
-        services.AddHttpClient<WasteService>(httpClient => {
+        services.AddHttpClient<IWasteService, WasteService>(httpClient => {
             httpClient.BaseAddress = new Uri(uriString: Constant.BaseUrl);
         });
         return services;

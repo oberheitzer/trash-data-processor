@@ -4,6 +4,8 @@ public static class Constant
 {
     public static readonly string BaseUrl = "https://vhg.hu";
 
+    public static readonly string Directory = "Calendars";
+
     public static readonly string Folder = "/storage";
 
     #region Area IV
