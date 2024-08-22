@@ -8,7 +8,7 @@ var ws = p.GetRequiredService<IWasteService>();
 var cs = p.GetRequiredService<ICalendarService>();
 
 // await ws.DownloadAsync();
-cs.Read(@"/Users/bertalandavid/Documents/projects/trash-data-processor/Calendars/test.pdf");
+// cs.Read(@"/Users/bertalandavid/Documents/projects/trash-data-processor/Calendars/test.pdf");
 
 Communicator.Introduce();
 Communicator.DisplayMenu();

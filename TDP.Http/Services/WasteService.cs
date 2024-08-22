@@ -14,10 +14,14 @@ internal sealed class WasteService : IWasteService
 
     public async Task DownloadAsync()
     {
-        var response = await _httpClient.GetAsync(requestUri: $"{Constant.Folder}{Constant.GardonyArea16}");
         var directory = Directory.CreateDirectory(path: DirectoryExtension.GetDirectoryPath(folderName: Constant.Directory));
-        using var file = File.Create(path: $@"{directory.FullName}/test.pdf");
-        var content = await response.Content.ReadAsStreamAsync();
-        await content.CopyToAsync(file);
+        
+        foreach ((string fileName, string requestUri) in Constant.Areas)
+        {
+            var response = await _httpClient.GetAsync(requestUri: $"{Constant.Folder}{requestUri}");
+            using var file = File.Create(path: $@"{directory.FullName}/{fileName}.pdf");
+            var content = await response.Content.ReadAsStreamAsync();
+            await content.CopyToAsync(file);
+        }
     }
 }
