@@ -44,6 +44,11 @@ internal sealed class CalendarService : ICalendarService
         }
     }
 
+    public void Write(string file)
+    {
+        
+    }
+
     /// <summary>
     /// Extract the necessary data from the downloaded PDF file.
     /// </summary>
