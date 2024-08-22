@@ -25,4 +25,11 @@ public static class Constant
     public static readonly string GardonyArea16EmptyPlot = "/1516/Gárdony-XVI_üres-telek.pdf";
     public static readonly string GardonyArea16HolidayHouse = "/1383/Gárdony_XVI_üdülő.pdf";
     #endregion
+
+    public static readonly Dictionary<string, string> Areas = new()
+    {
+        { "Gardony_XVI", GardonyArea16 },
+        { "Gardony_XVI_EP", GardonyArea16EmptyPlot },
+        { "Gardony_XVI_HH", GardonyArea16HolidayHouse },
+    };
 }
