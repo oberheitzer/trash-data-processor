@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Text;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
@@ -115,7 +114,7 @@ internal sealed class CalendarService : ICalendarService
         string[] days = line.Split(day.ToString());
         for (int index = 1; index < days.Length; index++)
         {
-            string[] collectionTypes = days[index].Trim().Split(' '); // TODO naming
+            string[] collectionTypes = days[index].Trim().Split(' ');
             if (collectionTypes.Length > 1)
             {
                 Insert(
