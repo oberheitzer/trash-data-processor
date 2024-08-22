@@ -14,9 +14,9 @@ internal sealed class WasteService : IWasteService
 
     public async Task DownloadAsync()
     {
-        var directory = Directory.CreateDirectory(path: DirectoryExtension.GetDirectoryPath(folderName: Constant.Directory));
+        var directory = Directory.CreateDirectory(path: DirectoryExtension.GetDirectoryPath(folderName: Shared.Constants.File.Calendars));
         
-        foreach ((string fileName, string requestUri) in Constant.Areas)
+        foreach ((string fileName, string requestUri) in Shared.Constants.Uri.Areas)
         {
             var response = await _httpClient.GetAsync(requestUri: $"{Constant.Folder}{requestUri}");
             using var file = File.Create(path: $@"{directory.FullName}/{fileName}.pdf");
