@@ -1,4 +1,5 @@
-﻿using TDP.Extractor;
+﻿using TDP.Extractor.Interfaces;
+using TDP.Extractor.Services;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
