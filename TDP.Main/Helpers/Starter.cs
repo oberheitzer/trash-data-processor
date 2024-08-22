@@ -8,6 +8,7 @@ public static class Starter
     {
         var services = new ServiceCollection();
         services.AddServices();
+        services.AddExtractorServices();
         return services.BuildServiceProvider();
     }
 }
