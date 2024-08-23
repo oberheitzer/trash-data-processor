@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
+using CsvHelper;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
@@ -6,6 +8,8 @@ using TDP.Domain.Enum;
 using TDP.Domain.Model;
 using TDP.Extractor.Helpers;
 using TDP.Extractor.Interfaces;
+using TDP.Extractor.Mappers;
+using TDP.Shared.Extensions;
 
 namespace TDP.Extractor.Services;
 
@@ -16,7 +20,7 @@ internal sealed class CalendarService : ICalendarService
     private const int FIRST_DAY = 1;
     private const int LAST_DAY = 31;
 
-    public void Read(string file)
+    public List<Collection> Read(string file)
     {
         using PdfReader reader = new(filename: file);
         using PdfDocument document = new(reader: reader);
@@ -42,11 +46,16 @@ internal sealed class CalendarService : ICalendarService
 
             dayIndex++;
         }
+
+        return collections;
     }
 
-    public void Write(string file)
+    public void Write(List<Collection> collections)
     {
-        
+        using StreamWriter writer = new(path: $"{DirectoryExtension.GetDirectoryPath(folderName: Shared.Constants.File.Data)}/{Shared.Constants.File.Collections}");
+        using CsvWriter csv = new(writer: writer, culture: CultureInfo.InvariantCulture);
+        csv.Context.RegisterClassMap<CollectionMapper>();
+        csv.WriteRecords(records: collections);
     }
 
     /// <summary>
