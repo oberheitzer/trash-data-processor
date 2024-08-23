@@ -8,7 +8,8 @@ var ws = p.GetRequiredService<IWasteService>();
 var cs = p.GetRequiredService<ICalendarService>();
 
 // await ws.DownloadAsync();
-// cs.Read(@"/Users/bertalandavid/Documents/projects/trash-data-processor/Calendars/test.pdf");
+var r = cs.Read(@"/Users/bertalandavid/Documents/projects/trash-data-processor/Calendars/Gardony_XVI.pdf");
+cs.Write(r);
 
 Communicator.Introduce();
 Communicator.DisplayMenu();
