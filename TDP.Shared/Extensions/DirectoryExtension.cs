@@ -1,4 +1,4 @@
-﻿namespace System.IO;
+﻿namespace TDP.Shared.Extensions;
 
 public static class DirectoryExtension
 {
