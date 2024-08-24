@@ -8,18 +8,18 @@ public static class ServiceCollectionExtension
 {
     public static ServiceCollection AddServices(this ServiceCollection services)
     {
-        string? supabasUrl = Environment.GetEnvironmentVariable(variable: Constant.SupabaseUrl);
-        string? supabasKey = Environment.GetEnvironmentVariable(variable: Constant.SupabaseKey);
-        if (string.IsNullOrEmpty(supabasUrl) || string.IsNullOrEmpty(supabasKey))
+        string? supabaseUrl = Environment.GetEnvironmentVariable(variable: Constant.SupabaseUrl);
+        string? supabaseKey = Environment.GetEnvironmentVariable(variable: Constant.SupabaseKey);
+        if (string.IsNullOrEmpty(supabaseUrl) || string.IsNullOrEmpty(supabaseKey))
         {
-            string missingVariable = string.IsNullOrEmpty(supabasUrl) ? Constant.SupabaseUrl : Constant.SupabaseKey;
+            string missingVariable = string.IsNullOrEmpty(supabaseUrl) ? Constant.SupabaseUrl : Constant.SupabaseKey;
             Console.WriteLine($"{missingVariable} is missing from environment variables!");
         }
         else
         {
             services.AddHttpClient<IDatabaseService, DatabaseService>(httpCLient => {
-                httpCLient.BaseAddress = new Uri(uriString: supabasUrl);
-                httpCLient.DefaultRequestHeaders.Add(name: Constant.ApiKey, value: supabasKey);
+                httpCLient.BaseAddress = new Uri(uriString: supabaseUrl);
+                httpCLient.DefaultRequestHeaders.Add(name: Constant.ApiKey, value: supabaseKey);
             });
         }
         services.AddHttpClient<IWasteService, WasteService>(httpClient => {
