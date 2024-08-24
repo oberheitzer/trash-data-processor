@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TDP.Shared\TDP.Shared.csproj" />
+    <ProjectReference Include="..\TDP.Domain\TDP.Domain.csproj" />
   </ItemGroup>
 
 </Project>

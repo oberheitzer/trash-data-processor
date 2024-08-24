@@ -6,10 +6,17 @@ using TDP.Main.Helpers;
 var p = Starter.Build();
 var ws = p.GetRequiredService<IWasteService>();
 var cs = p.GetRequiredService<ICalendarService>();
+var ds = p.GetRequiredService<IDatabaseService>();
 
 // await ws.DownloadAsync();
-var r = cs.Read(@"/Users/bertalandavid/Documents/projects/trash-data-processor/Calendars/Gardony_XVI.pdf");
-cs.Write(r);
+// var r = cs.Read(@"/Users/bertalandavid/Documents/projects/trash-data-processor/Calendars/Gardony_XVI.pdf");
+// cs.Write(r);
+
+await ds.GetAreasAsync();
+
+// var url = Environment.GetEnvironmentVariable("SUPABASE_URL");
+// Console.WriteLine(url);
+// Console.WriteLine(Environment.GetEnvironmentVariable("SUPABASE_KEY"));
 
 Communicator.Introduce();
 Communicator.DisplayMenu();
