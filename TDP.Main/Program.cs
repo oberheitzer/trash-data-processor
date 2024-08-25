@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TDP.Domain.Model;
 using TDP.Extractor.Interfaces;
 using TDP.Http.Interfaces;
 using TDP.Main.Helpers;
@@ -9,10 +10,16 @@ var cs = p.GetRequiredService<ICalendarService>();
 var ds = p.GetRequiredService<IDatabaseService>();
 
 // await ws.DownloadAsync();
-// var r = cs.Read(@"/Users/bertalandavid/Documents/projects/trash-data-processor/Calendars/Gardony_XVI.pdf");
+// var r = cs.Read(@"/Users/bertalandavid/Documents/projects/trash-data-processor/Calendars/Gardony_XVI.pdf", []);
+
+foreach (List<Collection> collections in cs.Read(areas: await ds.GetAreasAsync()))
+{
+    cs.Write(collections);
+}
+
 // cs.Write(r);
 
-await ds.GetAreasAsync();
+// await ds.GetAreasAsync();
 
 // var url = Environment.GetEnvironmentVariable("SUPABASE_URL");
 // Console.WriteLine(url);
