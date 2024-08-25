@@ -17,9 +17,6 @@ namespace TDP.Extractor.Services;
 internal sealed class CalendarService : ICalendarService
 {
     private int _id = 1;
-    private const int FIRST_PAGE = 1;
-    private const int FIRST_DAY = 1;
-    private const int LAST_DAY = 31;
 
     public IEnumerable<List<Collection>> Read(List<Area> areas)
     {
@@ -29,7 +26,7 @@ internal sealed class CalendarService : ICalendarService
             using PdfReader reader = new(filename: $"{DirectoryExtension.GetDirectoryPath(Shared.Constants.File.Calendars)}/{file}.pdf");
             using PdfDocument document = new(reader: reader);
             var strategy = new SimpleTextExtractionStrategy();
-            string text = PdfTextExtractor.GetTextFromPage(page: document.GetPage(pageNum: FIRST_PAGE), strategy: strategy);
+            string text = PdfTextExtractor.GetTextFromPage(page: document.GetPage(pageNum: Constant.FirstPage), strategy: strategy);
             string[] lines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
             (string calendar, int year, Property property, int areaId) = Extract(lines: lines, areas: areas);
@@ -85,7 +82,7 @@ internal sealed class CalendarService : ICalendarService
         {
             string day = line.Split(' ')[0];
             bool isNumber = int.TryParse(day, out int _day);
-            if (isNumber && _day >= FIRST_DAY && _day <= LAST_DAY)
+            if (isNumber && _day >= Constant.FirstDayOfMonth && _day <= Constant.LastDayOfLongerMonth)
             {
                 sb.AppendLine(line);
             }
