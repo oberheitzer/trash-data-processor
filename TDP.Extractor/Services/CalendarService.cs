@@ -62,7 +62,7 @@ internal sealed class CalendarService : ICalendarService
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             // Don't write the header again.
-            HasHeaderRecord = !System.IO.File.Exists(path: file),
+            HasHeaderRecord = !File.Exists(path: file),
         };
         using StreamWriter writer = new(path: file, append: true);
         using CsvWriter csv = new(writer: writer, configuration: config);
@@ -92,12 +92,6 @@ internal sealed class CalendarService : ICalendarService
 
             if (line.Contains(Constant.WasteCalendar))
             {
-                // Console.WriteLine(line);
-                // string s = line.Split("Gárdony")[1].Trim();
-                // int i = s.IndexOf('.');
-                // string s2 = s.Remove(i);
-                // Console.WriteLine(s);
-                // Console.WriteLine(s2);
                 areaId = Converter.ToAreaId(area: Converter.ToArea(line: line), areas: areas);
                 property = Converter.ToProperty(line: line);
                 bool isYear = int.TryParse(line.Substring(startIndex: 0, length: line.IndexOf('.')), out int year);
@@ -183,24 +177,6 @@ internal sealed class CalendarService : ICalendarService
             }
 
             Increase(month: ref month, day: day, index: index, year: year);
-
-            // if ((day == 30 && index == 1) || (!DateTime.IsLeapYear(year) && day == 29 && index == 1))
-            // {
-            //     // index += 2;
-            //     month += 2;
-            // }
-            // else if (day == 31 && index != 4)
-            // {
-            //     // index += 2;
-            //     month += 2;
-            // }
-            // else
-            // {
-            //     // index++;
-            //     month++;
-            // }
-
-            // month++;
         }
     }
 
