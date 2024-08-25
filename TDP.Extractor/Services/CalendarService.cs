@@ -79,9 +79,9 @@ internal sealed class CalendarService : ICalendarService
         Property property = Property.EmptyPlot; // TODO default value?
         foreach (string line in lines)
         {
-            string day = line.Split(' ')[0];
-            bool isNumber = int.TryParse(day, out int _day);
-            if (isNumber && _day >= Constant.FirstDayOfMonth && _day <= Constant.LastDayOfLongerMonth)
+            string dayString = line.Split(' ')[0];
+            bool isNumber = int.TryParse(dayString, out int day);
+            if (isNumber && day >= Constant.FirstDayOfMonth && day <= Constant.LastDayOfLongerMonth)
             {
                 sb.AppendLine(line);
             }
@@ -91,7 +91,7 @@ internal sealed class CalendarService : ICalendarService
                 areaId = Converter.ToAreaId(area: Converter.ToArea(line: line), areas: areas);
                 property = Converter.ToProperty(line: line);
                 bool isYear = int.TryParse(line.Substring(startIndex: 0, length: line.IndexOf('.')), out int year);
-                if (isYear && year / 1000 >= 1) // TODO second condition
+                if (isYear && year >= currentYear)
                 {
                     currentYear = year;
                 }
