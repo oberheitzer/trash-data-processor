@@ -22,7 +22,6 @@ internal sealed class CalendarService : ICalendarService
     {
         foreach (string file in Shared.Constants.Uri.Areas.Keys)
         {
-            Console.WriteLine(file);
             using PdfReader reader = new(filename: $"{DirectoryExtension.GetDirectoryPath(Shared.Constants.File.Calendars)}/{file}.pdf");
             using PdfDocument document = new(reader: reader);
             var strategy = new SimpleTextExtractionStrategy();
