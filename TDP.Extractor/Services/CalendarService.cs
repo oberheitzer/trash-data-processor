@@ -71,7 +71,7 @@ internal sealed class CalendarService : ICalendarService
     /// </summary>
     /// <param name="lines">All lines from the file.</param>
     /// <returns>The calendar lines, the year and the type of the property of waste collection.</returns>
-    private (string calendar, int year, Property property, int areaId) Extract(string[] lines, List<Area> areas)
+    private static (string calendar, int year, Property property, int areaId) Extract(string[] lines, List<Area> areas)
     {
         StringBuilder sb = new();
         int areaId = 0;
@@ -191,7 +191,7 @@ internal sealed class CalendarService : ICalendarService
         {
             AreaId = areaId,
             Date = new DateOnly(year: year, month: month, day: day),
-            Id = _id++, // TODO
+            Id = _id++,
             Property = property,
             Waste = Converter.ToWaste(code: code)
         };

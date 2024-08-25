@@ -29,7 +29,6 @@ public static class Converter
     /// <param name="areas">List of areas.</param>
     /// <returns>The identifier of the area.</returns>
     public static int ToAreaId(string area, List<Area> areas)
-    // TODO nem lesz jó, mert csak a római számos rész kellene
     // TODO check zártkert
         => areas.Single(a => area == a.Name).Id;
 
