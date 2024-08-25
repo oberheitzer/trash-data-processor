@@ -76,7 +76,7 @@ internal sealed class CalendarService : ICalendarService
         StringBuilder sb = new();
         int areaId = 0;
         int currentYear = DateTime.Now.Year;
-        Property property = Property.EmptyPlot; // TODO default value?
+        Property property = Property.None;
         foreach (string line in lines)
         {
             string dayString = line.Split(' ')[0];
