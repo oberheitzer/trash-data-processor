@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDP.Shared", "TDP.Shared\TD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5AA1FF92-ED9E-4CAB-8DE9-D1FFB2EA6757}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDP.Extractor.Test", "TDP.Extractor.Test\TDP.Extractor.Test.csproj", "{6436374B-7333-4956-B810-08AF384E0C00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,11 +87,26 @@ Global
 		{4B76D29F-F681-4FC7-88D3-3BB9609A9B62}.Release|x64.Build.0 = Release|Any CPU
 		{4B76D29F-F681-4FC7-88D3-3BB9609A9B62}.Release|x86.ActiveCfg = Release|Any CPU
 		{4B76D29F-F681-4FC7-88D3-3BB9609A9B62}.Release|x86.Build.0 = Release|Any CPU
+		{6436374B-7333-4956-B810-08AF384E0C00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6436374B-7333-4956-B810-08AF384E0C00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6436374B-7333-4956-B810-08AF384E0C00}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6436374B-7333-4956-B810-08AF384E0C00}.Debug|x64.Build.0 = Debug|Any CPU
+		{6436374B-7333-4956-B810-08AF384E0C00}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6436374B-7333-4956-B810-08AF384E0C00}.Debug|x86.Build.0 = Debug|Any CPU
+		{6436374B-7333-4956-B810-08AF384E0C00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6436374B-7333-4956-B810-08AF384E0C00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6436374B-7333-4956-B810-08AF384E0C00}.Release|x64.ActiveCfg = Release|Any CPU
+		{6436374B-7333-4956-B810-08AF384E0C00}.Release|x64.Build.0 = Release|Any CPU
+		{6436374B-7333-4956-B810-08AF384E0C00}.Release|x86.ActiveCfg = Release|Any CPU
+		{6436374B-7333-4956-B810-08AF384E0C00}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {91D680D5-958E-4B2F-8C1B-5CFD95DD246A}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6436374B-7333-4956-B810-08AF384E0C00} = {5AA1FF92-ED9E-4CAB-8DE9-D1FFB2EA6757}
 	EndGlobalSection
 EndGlobal
