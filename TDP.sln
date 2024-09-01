@@ -13,13 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDP.Extractor", "TDP.Extrac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDP.Shared", "TDP.Shared\TDP.Shared.csproj", "{4B76D29F-F681-4FC7-88D3-3BB9609A9B62}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5AA1FF92-ED9E-4CAB-8DE9-D1FFB2EA6757}"
+EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {91D680D5-958E-4B2F-8C1B-5CFD95DD246A}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -89,5 +85,11 @@ Global
 		{4B76D29F-F681-4FC7-88D3-3BB9609A9B62}.Release|x64.Build.0 = Release|Any CPU
 		{4B76D29F-F681-4FC7-88D3-3BB9609A9B62}.Release|x86.ActiveCfg = Release|Any CPU
 		{4B76D29F-F681-4FC7-88D3-3BB9609A9B62}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91D680D5-958E-4B2F-8C1B-5CFD95DD246A}
 	EndGlobalSection
 EndGlobal
