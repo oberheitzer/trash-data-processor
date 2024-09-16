@@ -1,0 +1,11 @@
+name: Update board automatically
+
+on:
+    push:
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: CONTEXT
+              run: echo '${{ toJson(github) }}'
