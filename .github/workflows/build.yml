@@ -2,7 +2,8 @@ name: Build and test TDP
 
 on:
     push:
-    pull_request: 
+      paths: '**.cs'
+    pull_request:
         branches: [ 'dev', 'main' ]
 jobs:
     build:
