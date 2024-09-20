@@ -1,14 +1,16 @@
 name: Issue
 
 on: 
-    push: 
-    # issues:
-    #     types: [opened, edited]
+    issues:
+        types: opened
 
 jobs:
-    to-do:
-        name: 'Add issue to project with TO DO state'
+    add-issue-to-the-project-as-to-do:
+        name: 'Add issue to project as TO DO'
         runs-on: ubuntu-latest
         steps:
-            - name: CONTEXT
-              run: echo '${{ toJson(github) }}'
+            - name: 'Add issue to project'
+              uses: actions/add-to-project@v1.0.2
+              with:
+                project-url: https://github.com/users/oberheitzer/projects/5
+                github-token: ${{ secrets.GITHUB_TOKEN }}
