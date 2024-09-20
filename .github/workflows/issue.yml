@@ -1,11 +1,13 @@
 name: Issue
 
 on: 
-    issues:
-        types: [opened, edited]
+    push: 
+    # issues:
+    #     types: [opened, edited]
 
 jobs:
     to-do:
+        name: 'Add issue to project with TO DO state'
         runs-on: ubuntu-latest
         steps:
             - name: CONTEXT
