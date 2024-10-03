@@ -7,7 +7,7 @@ public static class Starter
     public static ServiceProvider Build()
     {
         var services = new ServiceCollection();
-        services.AddServices();
+        services.AddHttpServices();
         services.AddExtractorServices();
         return services.BuildServiceProvider();
     }
