@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5AA1FF92
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDP.Extractor.Test", "TDP.Extractor.Test\TDP.Extractor.Test.csproj", "{6436374B-7333-4956-B810-08AF384E0C00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDP.Http.Test", "TDP.Http.Test\TDP.Http.Test.csproj", "{0C92C2E8-B200-4370-8DBF-610F6CB415D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,18 @@ Global
 		{6436374B-7333-4956-B810-08AF384E0C00}.Release|x64.Build.0 = Release|Any CPU
 		{6436374B-7333-4956-B810-08AF384E0C00}.Release|x86.ActiveCfg = Release|Any CPU
 		{6436374B-7333-4956-B810-08AF384E0C00}.Release|x86.Build.0 = Release|Any CPU
+		{0C92C2E8-B200-4370-8DBF-610F6CB415D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C92C2E8-B200-4370-8DBF-610F6CB415D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C92C2E8-B200-4370-8DBF-610F6CB415D0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0C92C2E8-B200-4370-8DBF-610F6CB415D0}.Debug|x64.Build.0 = Debug|Any CPU
+		{0C92C2E8-B200-4370-8DBF-610F6CB415D0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0C92C2E8-B200-4370-8DBF-610F6CB415D0}.Debug|x86.Build.0 = Debug|Any CPU
+		{0C92C2E8-B200-4370-8DBF-610F6CB415D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C92C2E8-B200-4370-8DBF-610F6CB415D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C92C2E8-B200-4370-8DBF-610F6CB415D0}.Release|x64.ActiveCfg = Release|Any CPU
+		{0C92C2E8-B200-4370-8DBF-610F6CB415D0}.Release|x64.Build.0 = Release|Any CPU
+		{0C92C2E8-B200-4370-8DBF-610F6CB415D0}.Release|x86.ActiveCfg = Release|Any CPU
+		{0C92C2E8-B200-4370-8DBF-610F6CB415D0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,5 +122,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6436374B-7333-4956-B810-08AF384E0C00} = {5AA1FF92-ED9E-4CAB-8DE9-D1FFB2EA6757}
+		{0C92C2E8-B200-4370-8DBF-610F6CB415D0} = {5AA1FF92-ED9E-4CAB-8DE9-D1FFB2EA6757}
 	EndGlobalSection
 EndGlobal
