@@ -6,7 +6,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtension
 {
-    public static ServiceCollection AddServices(this ServiceCollection services)
+    public static ServiceCollection AddHttpServices(this ServiceCollection services)
     {
         string? supabaseUrl = Environment.GetEnvironmentVariable(variable: Constant.SupabaseUrl);
         string? supabaseKey = Environment.GetEnvironmentVariable(variable: Constant.SupabaseKey);
