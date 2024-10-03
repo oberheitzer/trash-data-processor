@@ -29,8 +29,7 @@ public static class Converter
     /// <param name="areas">List of areas.</param>
     /// <returns>The identifier of the area.</returns>
     public static int ToAreaId(string area, List<Area> areas)
-    // TODO check zártkert
-        => areas.Single(a => area == a.Name).Id;
+        => areas.Single(a => area.ToLower() == a.Name.ToLower()).Id;
 
     public static Property ToProperty(string line) => line.ToLower() switch
     {
