@@ -1,11 +1,12 @@
 ﻿using Moq;
 using Moq.Protected;
+using Moq.Language.Flow;
 
 namespace TDP.Http.Test;
 
-internal static class MoqExtension
+internal static class MockExtension
 {
-    internal static Moq.Language.Flow.ISetup<HttpMessageHandler, Task<HttpResponseMessage>> SetupSendAsync(this Mock<HttpMessageHandler> handlerMock)
+    internal static ISetup<HttpMessageHandler, Task<HttpResponseMessage>> SetupSendAsync(this Mock<HttpMessageHandler> handlerMock)
     {
         return handlerMock
             .Protected()
