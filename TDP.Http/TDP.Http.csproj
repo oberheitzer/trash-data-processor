@@ -20,4 +20,8 @@
     <ProjectReference Include="..\TDP.Domain\TDP.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup> 
+    <InternalsVisibleTo Include="TDP.Http.Test" /> 
+  </ItemGroup>
+
 </Project>
