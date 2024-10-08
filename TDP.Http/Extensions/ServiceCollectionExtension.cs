@@ -18,7 +18,7 @@ public static class ServiceCollectionExtension
         else
         {
             services.AddHttpClient<IDatabaseService, DatabaseService>(httpClient => {
-                httpClient.BaseAddress = new Uri(uriString: supabaseUrl);
+                httpClient.BaseAddress = new Uri(uriString: $"{supabaseUrl}{Constant.Rest}");
                 httpClient.DefaultRequestHeaders.Add(name: Constant.ApiKey, value: supabaseKey);
             });
         }
