@@ -14,4 +14,6 @@ public static class Constant
 
     public static readonly string AreaUri = "areas";
 
+    public static readonly string Rest = "/rest/v1/";
+
 }
