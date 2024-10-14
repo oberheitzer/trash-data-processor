@@ -32,12 +32,10 @@ internal static class Builder
 
     internal static HttpResponseMessage BuildResponse(object? value, HttpStatusCode code = HttpStatusCode.OK)
     {
-        var response = new HttpResponseMessage(statusCode: code);
-        if (value is not null)
+        return new HttpResponseMessage(statusCode: code)
         {
-            response.Content = new StringContent(JsonSerializer.Serialize(value: value));
-        }
-        return response;
+           Content = new StringContent(JsonSerializer.Serialize(value: value))
+        };
     }
 
     internal static HttpClient CreateClient(HttpMessageHandler handler)
