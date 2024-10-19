@@ -1,4 +1,5 @@
-﻿using TDP.Http.Helpers;
+﻿using System.IO.Abstractions;
+using TDP.Http.Helpers;
 using TDP.Http.Interfaces;
 using TDP.Http.Services;
 
@@ -25,6 +26,7 @@ public static class ServiceCollectionExtension
         services.AddHttpClient<IWasteService, WasteService>(httpClient => {
             httpClient.BaseAddress = new Uri(uriString: Constant.BaseUrl);
         });
+        services.AddScoped<IFileSystem, FileSystem>();
         return services;
     }
 }
