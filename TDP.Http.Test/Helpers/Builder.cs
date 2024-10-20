@@ -19,6 +19,15 @@ internal static class Builder
         ];
     }
 
+    internal static List<Calendar> BuildCalendars()
+    {
+        return
+        [
+            new Calendar { Id = 1, Name = "Test 1", SettlementId = 1, Uri = "/test-path-one" },
+            new Calendar { Id = 1, Name = "Test 2", SettlementId = 1, Uri = "/test-path-two" }
+        ];
+    }
+
     internal static void BuildFileMocks(MockFileSystem fileSystem, Mock<IFileSystem> fileSystemMock)
     {
          _ = fileSystemMock
