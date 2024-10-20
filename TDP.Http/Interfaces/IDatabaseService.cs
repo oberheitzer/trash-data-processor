@@ -9,4 +9,10 @@ public interface IDatabaseService
     /// </summary>
     /// <returns>List of areas.</returns>
     Task<List<Area>> GetAreasAsync();
+
+    /// <summary>
+    /// Gets the metadata of the calendars.
+    /// </summary>
+    /// <returns>List of calendars' metadata.</returns>
+    Task<List<Calendar>> GetCalendarsAsync();
 }
