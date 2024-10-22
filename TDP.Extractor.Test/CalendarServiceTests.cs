@@ -4,7 +4,7 @@ namespace TDP.Extractor.Test;
 public class CalendarServiceTests
 {
     [TestMethod]
-    public void TestMethod1()
+    public void Write_Should_Work()
     {
         // Arrange
 
