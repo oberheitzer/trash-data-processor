@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.IO.Abstractions;
 using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -17,6 +18,13 @@ namespace TDP.Extractor.Services;
 internal sealed class CalendarService : ICalendarService
 {
     private int _id = 1;
+
+    private readonly IFileSystem _fileSystem;
+
+    public CalendarService(IFileSystem fileSystem)
+    {
+        _fileSystem = fileSystem;
+    }
 
     public IEnumerable<List<Collection>> Read(List<Area> areas)
     {
@@ -54,11 +62,11 @@ internal sealed class CalendarService : ICalendarService
 
     public void Write(List<Collection> collections)
     {
-        string file = $"{DirectoryExtension.GetDirectoryPath(folderName: Shared.Constants.File.Data)}/{Shared.Constants.File.Collections}";
+        string file = $"{_fileSystem.GetDirectoryPath(folderName: Shared.Constants.File.Data)}/{Shared.Constants.File.Collections}";
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             // Don't write the header again.
-            HasHeaderRecord = !File.Exists(path: file),
+            HasHeaderRecord = !_fileSystem.File.Exists(path: file),
         };
         using StreamWriter writer = new(path: file, append: true);
         using CsvWriter csv = new(writer: writer, configuration: config);
