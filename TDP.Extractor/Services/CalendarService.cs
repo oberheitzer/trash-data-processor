@@ -68,7 +68,7 @@ internal sealed class CalendarService : ICalendarService
             // Don't write the header again.
             HasHeaderRecord = !_fileSystem.File.Exists(path: file),
         };
-        using StreamWriter writer = _fileSystem.File.AppendText(path: file); // new(path: file, append: true);
+        using StreamWriter writer = _fileSystem.File.AppendText(path: file);
         using CsvWriter csv = new(writer: writer, configuration: config);
         csv.Context.RegisterClassMap<CollectionMapper>();
         csv.WriteRecords(records: collections);
