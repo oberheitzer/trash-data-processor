@@ -17,4 +17,8 @@
     <ProjectReference Include="..\TDP.Shared\TDP.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup> 
+    <InternalsVisibleTo Include="TDP.Extractor.Test" /> 
+  </ItemGroup>
+
 </Project>
