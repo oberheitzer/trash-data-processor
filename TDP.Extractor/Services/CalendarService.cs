@@ -11,7 +11,6 @@ using TDP.Domain.Model;
 using TDP.Extractor.Helpers;
 using TDP.Extractor.Interfaces;
 using TDP.Extractor.Mappers;
-using TDP.Shared.Extensions;
 
 namespace TDP.Extractor.Services;
 
@@ -30,7 +29,7 @@ internal sealed class CalendarService : ICalendarService
     {
         foreach (string file in Shared.Constants.Uri.Areas.Keys)
         {
-            using PdfReader reader = new(filename: $"{DirectoryExtension.GetDirectoryPath(Shared.Constants.File.Calendars)}/{file}.pdf");
+            using PdfReader reader = new(filename: $"{_fileSystem.GetDirectoryPath(Shared.Constants.File.Calendars)}/{file}.pdf");
             using PdfDocument document = new(reader: reader);
             var strategy = new SimpleTextExtractionStrategy();
             string text = PdfTextExtractor.GetTextFromPage(page: document.GetPage(pageNum: Constant.FirstPage), strategy: strategy);

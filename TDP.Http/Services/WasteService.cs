@@ -2,7 +2,6 @@
 using System.Net;
 using TDP.Http.Helpers;
 using TDP.Http.Interfaces;
-using TDP.Shared.Extensions;
 
 namespace TDP.Http.Services;
 
@@ -19,7 +18,7 @@ internal sealed class WasteService : IWasteService
 
     public async Task DownloadAsync()
     {
-        var directory = _fileSystem.Directory.CreateDirectory(path: DirectoryExtension.GetDirectoryPath(folderName: Shared.Constants.File.Calendars));
+        var directory = _fileSystem.Directory.CreateDirectory(path: _fileSystem.GetDirectoryPath(folderName: Shared.Constants.File.Calendars));
         
         foreach ((string fileName, string requestUri) in Shared.Constants.Uri.Areas)
         {
