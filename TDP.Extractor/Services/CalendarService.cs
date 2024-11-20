@@ -141,13 +141,14 @@ internal sealed class CalendarService : ICalendarService
     {
         for (int i = 1; i < collectionTypes.Length; i++)
         {
-            collections.Add(ToCollection(
+            collections.Add(Converter.ToCollection(
                 year: year,
                 month: month,
                 day: dayIndex,
                 code: collectionTypes[i],
                 property: property,
-                areaId: areaId
+                areaId: areaId,
+                id: _id++
             ));
         }
     }
@@ -184,24 +185,5 @@ internal sealed class CalendarService : ICalendarService
         }
     }
 
-    /// <summary>
-    /// Creates and instance of the Collection class.
-    /// </summary>
-    /// <param name="year">Year of collection.</param>
-    /// <param name="month">Month of collection.</param>
-    /// <param name="day">Day of collection.</param>
-    /// <param name="code">The code of the type of waste.</param>
-    /// <param name="property">The type of the property.</param>
-    /// <returns>Created instance of Collection.</returns>
-    private Collection ToCollection(int year, int month, int day, string code, Property property, int areaId)
-    {
-        return new Collection
-        {
-            AreaId = areaId,
-            Date = new DateOnly(year: year, month: month, day: day),
-            Id = _id++,
-            Property = property,
-            Waste = Converter.ToWaste(code: code)
-        };
-    }
+    
 }
