@@ -8,7 +8,7 @@ public static class FileSystemExtensions
     /// <param name="fileSystem">File system abstraction.</param>
     /// <param name="folderName">Name of the folder.</param>
     /// <returns>Path.</returns>
-    public static string GetDirectoryPath(this IFileSystem fileSystem,  string folderName)
+    public static string GetDirectoryPath(this IFileSystem fileSystem, string folderName)
     {
         string current = fileSystem.Directory.GetCurrentDirectory();
         var info = fileSystem.DirectoryInfo.New(path: current);
