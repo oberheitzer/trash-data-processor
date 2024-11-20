@@ -34,11 +34,11 @@ internal sealed class CalendarService : ICalendarService
             using PdfDocument document = new(reader: reader);
             var strategy = new SimpleTextExtractionStrategy();
             string text = PdfTextExtractor.GetTextFromPage(page: document.GetPage(pageNum: Constant.FirstPage), strategy: strategy);
-            string[] lines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            string[] lines = text.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
 
             (string calendar, int year, Property property, int areaId) = Extract(lines: lines, areas: areas);
 
-            string[] dayLines = calendar.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            string[] dayLines = calendar.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
             List<Collection> collections = [];
             int dayIndex = 1;
 
@@ -183,7 +183,5 @@ internal sealed class CalendarService : ICalendarService
 
             Increase(month: ref month, day: day, index: index, year: year);
         }
-    }
-
-    
+    } 
 }
