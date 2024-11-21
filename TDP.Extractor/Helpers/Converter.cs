@@ -48,7 +48,7 @@ public static class Converter
             Date = new DateOnly(year: year, month: month, day: day),
             Id = id,
             Property = property,
-            Waste = Converter.ToWaste(code: code)
+            Waste = ToWaste(code: code)
         };
     }
 
