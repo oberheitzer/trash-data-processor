@@ -3,6 +3,7 @@ using System.IO.Abstractions.TestingHelpers;
 using System.Net;
 using FluentAssertions;
 using Moq;
+using TDP.Domain.Model;
 using TDP.Http.Services;
 
 namespace TDP.Http.Test;
@@ -21,6 +22,11 @@ public class WasteServiceTests
         var fileSystem = new MockFileSystem();
         fileSystem.AddFile(path: "Test.sln", mockFile: new MockFileData(textContents: "Test"));
 
+        List<Calendar> calendars = [
+            new Calendar { Id = 1, Name = "test_one", SettlementId = 1, Uri = "/test-one.pdf" },
+            new Calendar { Id = 2, Name = "test_two", SettlementId = 1, Uri = "/test-two.pdf" }
+        ];
+
         _ = _handlerMock
             .SetupSendAsync()
             .ReturnsAsync(Builder.BuildResponse(value: content));
@@ -30,11 +36,12 @@ public class WasteServiceTests
             fileSystem: fileSystem);
 
         // Act
-        await service.DownloadAsync();
+        await service.DownloadAsync(calendars: calendars);
 
         // Assert
-        string firstPdf = fileSystem.File.ReadAllText("/Calendars/Gardony_IV.pdf");
-        string secondPdf = fileSystem.File.ReadAllText("/Calendars/Gardony_XVI.pdf");
+        fileSystem.Directory.GetFiles("/Calendars").Length.Should().Be(2);
+        string firstPdf = fileSystem.File.ReadAllText("/Calendars/test_one.pdf");
+        string secondPdf = fileSystem.File.ReadAllText("/Calendars/test_two.pdf");
         firstPdf.Should().Contain(content);
         secondPdf.Should().Contain(content);
     }
@@ -55,7 +62,7 @@ public class WasteServiceTests
             fileSystem: fileSystem);
 
         // Act
-        await service.DownloadAsync();
+        await service.DownloadAsync([]);
 
         // Assert
         fileSystem.Directory.GetFiles("/Calendars").Length.Should().Be(0);

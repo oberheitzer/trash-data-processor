@@ -1,5 +1,6 @@
 ﻿using System.IO.Abstractions;
 using System.Net;
+using TDP.Domain.Model;
 using TDP.Http.Helpers;
 using TDP.Http.Interfaces;
 
@@ -16,16 +17,16 @@ internal sealed class WasteService : IWasteService
         _fileSystem = fileSystem;
     }
 
-    public async Task DownloadAsync()
+    public async Task DownloadAsync(List<Calendar> calendars)
     {
         var directory = _fileSystem.Directory.CreateDirectory(path: _fileSystem.GetDirectoryPath(folderName: Shared.Constants.File.Calendars));
 
-        foreach ((string fileName, string requestUri) in Shared.Constants.Uri.Areas)
+        foreach (Calendar calendar in calendars)
         {
-            var response = await _httpClient.GetAsync(requestUri: $"{Constant.Folder}{requestUri}");
+            var response = await _httpClient.GetAsync(requestUri: $"{Constant.Folder}{calendar.Uri}");
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                using var file = _fileSystem.File.Create(path: $@"{directory.FullName}/{fileName}.pdf");
+                using var file = _fileSystem.File.Create(path: $@"{directory.FullName}/{calendar.Name}.pdf");
                 var content = await response.Content.ReadAsStreamAsync();
                 await content.CopyToAsync(file);
                 content.Position = 0;
