@@ -38,6 +38,28 @@ public class ConverterTests
         Assert.AreEqual(expected: expected, actual: areaId);
     }
 
+    [TestMethod]
+    public void ToCollection_Should_Work()
+    {
+        // Arrange & Act
+        Collection collection = Converter.ToCollection(
+            year: 2024,
+            month: 6,
+            day: 15,
+            code: "V",
+            property: Property.PermanentAddress,
+            areaId: 1,
+            id: 1
+        );
+
+        // Assert
+        Assert.AreEqual(expected: new DateOnly(2024, 6, 15), actual: collection.Date);
+        Assert.AreEqual(expected: 1, actual: collection.Id);
+        Assert.AreEqual(expected: 1, actual: collection.AreaId);
+        Assert.AreEqual(expected: Waste.Solid, actual: collection.Waste);
+        Assert.AreEqual(expected: Property.PermanentAddress, actual: collection.Property);
+    }
+
     [DataTestMethod]
     [DataRow("üdülő", Property.HolidayHouse)]
     [DataRow("Üdülő", Property.HolidayHouse)]
