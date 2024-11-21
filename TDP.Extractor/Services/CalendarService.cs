@@ -25,11 +25,11 @@ internal sealed class CalendarService : ICalendarService
         _fileSystem = fileSystem;
     }
 
-    public IEnumerable<List<Collection>> Read(List<Area> areas)
+    public IEnumerable<List<Collection>> Read(List<Area> areas, List<Domain.Model.Calendar> calendars)
     {
-        foreach (string file in Shared.Constants.Uri.Areas.Keys)
+        foreach (Domain.Model.Calendar info in calendars)
         {
-            using PdfReader reader = new(filename: $"{_fileSystem.GetDirectoryPath(Shared.Constants.File.Calendars)}/{file}.pdf");
+            using PdfReader reader = new(filename: $"{_fileSystem.GetDirectoryPath(Shared.Constants.File.Calendars)}/{info.Name}.pdf");
             using PdfDocument document = new(reader: reader);
             var strategy = new SimpleTextExtractionStrategy();
             string text = PdfTextExtractor.GetTextFromPage(page: document.GetPage(pageNum: Constant.FirstPage), strategy: strategy);
