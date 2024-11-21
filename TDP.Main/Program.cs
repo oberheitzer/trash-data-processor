@@ -12,10 +12,10 @@ var ds = p.GetRequiredService<IDatabaseService>();
 // await ws.DownloadAsync();
 // var r = cs.Read(@"/Users/bertalandavid/Documents/projects/trash-data-processor/Calendars/Gardony_XVI.pdf", []);
 
-foreach (List<Collection> collections in cs.Read(areas: await ds.GetAreasAsync()))
-{
-    cs.Write(collections);
-}
+// foreach (List<Collection> collections in cs.Read(areas: await ds.GetAreasAsync()))
+// {
+//     cs.Write(collections);
+// }
 
 // cs.Write(r);
 

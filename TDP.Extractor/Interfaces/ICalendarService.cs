@@ -8,7 +8,7 @@ public interface ICalendarService
     /// Reads the downloaded files.
     /// </summary>
     /// <param name="file">The downloaded file.</param>
-    IEnumerable<List<Collection>> Read(List<Area> areas);
+    IEnumerable<List<Collection>> Read(List<Area> areas, List<Calendar> calendars);
 
     /// <summary>
     /// Writes the waste collection days into the specific csv file.

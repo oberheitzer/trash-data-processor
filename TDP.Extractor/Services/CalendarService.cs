@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.IO.Abstractions;
 using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -10,7 +11,6 @@ using TDP.Domain.Model;
 using TDP.Extractor.Helpers;
 using TDP.Extractor.Interfaces;
 using TDP.Extractor.Mappers;
-using TDP.Shared.Extensions;
 
 namespace TDP.Extractor.Services;
 
@@ -18,19 +18,26 @@ internal sealed class CalendarService : ICalendarService
 {
     private int _id = 1;
 
-    public IEnumerable<List<Collection>> Read(List<Area> areas)
+    private readonly IFileSystem _fileSystem;
+
+    public CalendarService(IFileSystem fileSystem)
     {
-        foreach (string file in Shared.Constants.Uri.Areas.Keys)
+        _fileSystem = fileSystem;
+    }
+
+    public IEnumerable<List<Collection>> Read(List<Area> areas, List<Domain.Model.Calendar> calendars)
+    {
+        foreach (Domain.Model.Calendar info in calendars)
         {
-            using PdfReader reader = new(filename: $"{DirectoryExtension.GetDirectoryPath(Shared.Constants.File.Calendars)}/{file}.pdf");
+            using PdfReader reader = new(filename: $"{_fileSystem.GetDirectoryPath(Shared.Constants.File.Calendars)}/{info.Name}.pdf");
             using PdfDocument document = new(reader: reader);
             var strategy = new SimpleTextExtractionStrategy();
             string text = PdfTextExtractor.GetTextFromPage(page: document.GetPage(pageNum: Constant.FirstPage), strategy: strategy);
-            string[] lines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            string[] lines = text.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
 
             (string calendar, int year, Property property, int areaId) = Extract(lines: lines, areas: areas);
 
-            string[] dayLines = calendar.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            string[] dayLines = calendar.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
             List<Collection> collections = [];
             int dayIndex = 1;
 
@@ -54,13 +61,13 @@ internal sealed class CalendarService : ICalendarService
 
     public void Write(List<Collection> collections)
     {
-        string file = $"{DirectoryExtension.GetDirectoryPath(folderName: Shared.Constants.File.Data)}/{Shared.Constants.File.Collections}";
+        string file = $"{_fileSystem.GetDirectoryPath(folderName: Shared.Constants.File.Data)}/{Shared.Constants.File.Collections}";
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             // Don't write the header again.
-            HasHeaderRecord = !File.Exists(path: file),
+            HasHeaderRecord = !_fileSystem.File.Exists(path: file),
         };
-        using StreamWriter writer = new(path: file, append: true);
+        using StreamWriter writer = _fileSystem.File.AppendText(path: file);
         using CsvWriter csv = new(writer: writer, configuration: config);
         csv.Context.RegisterClassMap<CollectionMapper>();
         csv.WriteRecords(records: collections);
@@ -133,13 +140,14 @@ internal sealed class CalendarService : ICalendarService
     {
         for (int i = 1; i < collectionTypes.Length; i++)
         {
-            collections.Add(ToCollection(
+            collections.Add(Converter.ToCollection(
                 year: year,
                 month: month,
                 day: dayIndex,
                 code: collectionTypes[i],
                 property: property,
-                areaId: areaId
+                areaId: areaId,
+                id: _id++
             ));
         }
     }
@@ -174,26 +182,5 @@ internal sealed class CalendarService : ICalendarService
 
             Increase(month: ref month, day: day, index: index, year: year);
         }
-    }
-
-    /// <summary>
-    /// Creates and instance of the Collection class.
-    /// </summary>
-    /// <param name="year">Year of collection.</param>
-    /// <param name="month">Month of collection.</param>
-    /// <param name="day">Day of collection.</param>
-    /// <param name="code">The code of the type of waste.</param>
-    /// <param name="property">The type of the property.</param>
-    /// <returns>Created instance of Collection.</returns>
-    private Collection ToCollection(int year, int month, int day, string code, Property property, int areaId)
-    {
-        return new Collection
-        {
-            AreaId = areaId,
-            Date = new DateOnly(year: year, month: month, day: day),
-            Id = _id++,
-            Property = property,
-            Waste = Converter.ToWaste(code: code)
-        };
-    }
+    } 
 }
