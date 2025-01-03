@@ -29,4 +29,10 @@ public class Settlement
     /// Areas.
     /// </summary>
     public List<Area> Areas { get; set; } = [];
+
+    /// <summary>
+    /// Streets.
+    /// The streets that belong to the settlement.
+    /// </summary>
+    public List<Street> Streets { get; set; } = [];
 }

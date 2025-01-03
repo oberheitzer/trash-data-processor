@@ -24,4 +24,15 @@ public class Street
     /// Navigation property.
     /// </summary>
     public Area Area { get; set; } = null!;
+
+    /// <summary>
+    /// Foreign key.
+    /// The settlement where the street belongs to.
+    /// </summary>
+    public int SettlementId { get; set; }
+
+    /// <summary>
+    /// Navigation property.
+    /// </summary>
+    public Settlement Settlement { get; set; } = null!;
 }
