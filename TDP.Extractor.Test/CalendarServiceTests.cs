@@ -24,7 +24,6 @@ public class CalendarServiceTests
         text.Should().NotBeEmpty();
         text.Should().Contain("id");
         text.Should().Contain("date");
-        text.Should().Contain("property");
         text.Should().Contain("waste");
         text.Should().Contain("area_id");
     }
@@ -48,11 +47,10 @@ public class CalendarServiceTests
         string[] lines = fileSystem.File.ReadAllLines("Data/collections.csv");
         lines.Should().NotBeEmpty();
         lines.Length.Should().Be(3);
-        string[] properites = lines[1].Split(',');
-        Assert.AreEqual(expected: properites[0], actual: "1");
-        Assert.AreEqual(expected: properites[1], actual: "11/05/2024");
-        Assert.AreEqual(expected: properites[2], actual: "0");
-        Assert.AreEqual(expected: properites[3], actual: "3");
-        Assert.AreEqual(expected: properites[4], actual: "1");
+        string[] properties = lines[1].Split(',');
+        Assert.AreEqual(expected: properties[0], actual: "1");
+        Assert.AreEqual(expected: properties[1], actual: "11/05/2024");
+        Assert.AreEqual(expected: properties[2], actual: "0");
+        Assert.AreEqual(expected: properties[3], actual: "1");
     }
 }
