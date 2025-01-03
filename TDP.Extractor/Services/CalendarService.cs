@@ -3,14 +3,12 @@ using System.IO.Abstractions;
 using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
-using iText.Kernel.Pdf;
-using iText.Kernel.Pdf.Canvas.Parser;
-using iText.Kernel.Pdf.Canvas.Parser.Listener;
-using TDP.Domain.Enum;
 using TDP.Domain.Model;
 using TDP.Extractor.Helpers;
 using TDP.Extractor.Interfaces;
 using TDP.Extractor.Mappers;
+using UglyToad.PdfPig;
+using UglyToad.PdfPig.DocumentLayoutAnalysis.TextExtractor;
 
 namespace TDP.Extractor.Services;
 
@@ -29,13 +27,7 @@ internal sealed class CalendarService : ICalendarService
     {
         foreach (Domain.Model.Calendar info in calendars)
         {
-            using PdfReader reader = new(filename: $"{_fileSystem.GetDirectoryPath(Shared.Constants.File.Calendars)}/{info.Name}.pdf");
-            using PdfDocument document = new(reader: reader);
-            var strategy = new SimpleTextExtractionStrategy();
-            string text = PdfTextExtractor.GetTextFromPage(page: document.GetPage(pageNum: Constant.FirstPage), strategy: strategy);
-            string[] lines = text.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
-
-            (string calendar, int year, int areaId) = Extract(lines: lines, areas: areas);
+            (string calendar, int year, int areaId) = Extract(lines: GetLines(name: info.Name), areas: areas);
 
             string[] dayLines = calendar.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
             List<Collection> collections = [];
@@ -102,6 +94,19 @@ internal sealed class CalendarService : ICalendarService
             }
         }
         return (calendar: sb.ToString(), year: currentYear, areaId);
+    }
+
+    /// <summary>
+    /// Read the content of the PDF file and returns with the lines.
+    /// </summary>
+    /// <param name="name">Name of the file.</param>
+    /// <returns>Lines.</returns>
+    private string[] GetLines(string name)
+    {
+        string path = $"{_fileSystem.GetDirectoryPath(Shared.Constants.File.Calendars)}/{name}.pdf";
+        using var document = PdfDocument.Open(_fileSystem.File.Open(path, FileMode.Open));
+        string text = ContentOrderTextExtractor.GetText(page: document.GetPage(pageNumber: 1));
+        return text.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
     }
 
     /// <summary>
