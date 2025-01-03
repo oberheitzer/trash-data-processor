@@ -26,6 +26,12 @@ public class Settlement
     public Company Company { get; set; } = null!;
 
     /// <summary>
+    /// Foreign key.
+    /// If the settlement is part of an other settlement, this value is not null.
+    /// </summary>
+    public int? SettlementId { get; set; }
+
+    /// <summary>
     /// Areas.
     /// </summary>
     public List<Area> Areas { get; set; } = [];
