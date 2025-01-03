@@ -18,7 +18,7 @@ public class Street
     /// <summary>
     /// Foreign key.
     /// </summary>
-    public int AreaId { get; set; }
+    public int? AreaId { get; set; }
 
     /// <summary>
     /// Navigation property.
