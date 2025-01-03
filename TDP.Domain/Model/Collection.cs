@@ -18,11 +18,6 @@ public class Collection
     public DateOnly Date { get; set; }
 
     /// <summary>
-    /// The type of property or plot where the waste is collected from.
-    /// </summary>
-    public Property Property { get; set; }
-
-    /// <summary>
     /// The type of the waste that is collected.
     /// </summary>
     public Waste Waste { get; set; }

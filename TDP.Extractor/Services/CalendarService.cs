@@ -35,7 +35,7 @@ internal sealed class CalendarService : ICalendarService
             string text = PdfTextExtractor.GetTextFromPage(page: document.GetPage(pageNum: Constant.FirstPage), strategy: strategy);
             string[] lines = text.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
 
-            (string calendar, int year, Property property, int areaId) = Extract(lines: lines, areas: areas);
+            (string calendar, int year, int areaId) = Extract(lines: lines, areas: areas);
 
             string[] dayLines = calendar.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
             List<Collection> collections = [];
@@ -48,7 +48,6 @@ internal sealed class CalendarService : ICalendarService
                     line: dayLine,
                     day: dayIndex,
                     year: year,
-                    property: property,
                     areaId: areaId
                 );
 
@@ -78,12 +77,11 @@ internal sealed class CalendarService : ICalendarService
     /// </summary>
     /// <param name="lines">All lines from the file.</param>
     /// <returns>The calendar lines, the year and the type of the property of waste collection.</returns>
-    private static (string calendar, int year, Property property, int areaId) Extract(string[] lines, List<Area> areas)
+    private static (string calendar, int year, int areaId) Extract(string[] lines, List<Area> areas)
     {
         StringBuilder sb = new();
         int areaId = 0;
         int currentYear = DateTime.Now.Year;
-        Property property = Property.None;
         foreach (string line in lines)
         {
             string dayString = line.Split(' ')[0];
@@ -96,7 +94,6 @@ internal sealed class CalendarService : ICalendarService
             if (line.Contains(Constant.WasteCalendar))
             {
                 areaId = Converter.ToAreaId(area: Converter.ToArea(line: line), areas: areas);
-                property = Converter.ToProperty(line: line);
                 bool isYear = int.TryParse(line.Substring(startIndex: 0, length: line.IndexOf('.')), out int year);
                 if (isYear && year >= currentYear)
                 {
@@ -104,7 +101,7 @@ internal sealed class CalendarService : ICalendarService
                 }
             }
         }
-        return (calendar: sb.ToString(), year: currentYear, property, areaId);
+        return (calendar: sb.ToString(), year: currentYear, areaId);
     }
 
     /// <summary>
@@ -136,7 +133,7 @@ internal sealed class CalendarService : ICalendarService
     /// <param name="month">Month.</param>
     /// <param name="dayIndex">Day.</param>
     /// <param name="property">The type of property.</param>
-    private void Insert(List<Collection> collections, string[] collectionTypes, int year, int month, int dayIndex, Property property, int areaId)
+    private void Insert(List<Collection> collections, string[] collectionTypes, int year, int month, int dayIndex, int areaId)
     {
         for (int i = 1; i < collectionTypes.Length; i++)
         {
@@ -145,7 +142,6 @@ internal sealed class CalendarService : ICalendarService
                 month: month,
                 day: dayIndex,
                 code: collectionTypes[i],
-                property: property,
                 areaId: areaId,
                 id: _id++
             ));
@@ -160,7 +156,7 @@ internal sealed class CalendarService : ICalendarService
     /// <param name="day">Day.</param>
     /// <param name="year">Year.</param>
     /// <param name="property">The type of property.</param>
-    private void ReadLine(List<Collection> collections, string line, int day, int year, Property property, int areaId)
+    private void ReadLine(List<Collection> collections, string line, int day, int year, int areaId)
     {
         int month = 1;
         string[] days = line.Split(day.ToString());
@@ -175,7 +171,6 @@ internal sealed class CalendarService : ICalendarService
                     year: year,
                     month: month,
                     dayIndex: day,
-                    property: property,
                     areaId: areaId
                 );
             }

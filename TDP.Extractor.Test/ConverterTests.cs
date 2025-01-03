@@ -47,7 +47,6 @@ public class ConverterTests
             month: 6,
             day: 15,
             code: "V",
-            property: Property.PermanentAddress,
             areaId: 1,
             id: 1
         );
@@ -57,30 +56,6 @@ public class ConverterTests
         Assert.AreEqual(expected: 1, actual: collection.Id);
         Assert.AreEqual(expected: 1, actual: collection.AreaId);
         Assert.AreEqual(expected: Waste.Solid, actual: collection.Waste);
-        Assert.AreEqual(expected: Property.PermanentAddress, actual: collection.Property);
-    }
-
-    [DataTestMethod]
-    [DataRow("üdülő", Property.HolidayHouse)]
-    [DataRow("Üdülő", Property.HolidayHouse)]
-    [DataRow("ÜDÜLŐ", Property.HolidayHouse)]
-    [DataRow("üres", Property.EmptyPlot)]
-    [DataRow("Üres", Property.EmptyPlot)]
-    [DataRow("ÜRES", Property.EmptyPlot)]
-    [DataRow("zártkert", Property.GardenPlot)]
-    [DataRow("Zártkert", Property.GardenPlot)]
-    [DataRow("ZÁRTKERT", Property.GardenPlot)]
-    [DataRow("", Property.PermanentAddress)]
-    public void ToProperty_Should_Work(string property, Property expected)
-    {
-        // Arrange
-        string line = $"2024. évi hulladéknaptár - Teszt {property}";
-
-        // Act
-        Property convertedValue = Converter.ToProperty(line: line);
-
-        // Assert
-        Assert.AreEqual(expected: expected, actual: convertedValue);
     }
 
     [DataTestMethod]

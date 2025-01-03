@@ -40,25 +40,16 @@ public static class Converter
     /// <param name="code">The code of the type of waste.</param>
     /// <param name="property">The type of the property.</param>
     /// <returns>Created instance of Collection.</returns>
-    public static Collection ToCollection(int year, int month, int day, string code, Property property, int areaId, int id)
+    public static Collection ToCollection(int year, int month, int day, string code, int areaId, int id)
     {
         return new Collection
         {
             AreaId = areaId,
             Date = new DateOnly(year: year, month: month, day: day),
             Id = id,
-            Property = property,
             Waste = ToWaste(code: code)
         };
     }
-
-    public static Property ToProperty(string line) => line.ToLower() switch
-    {
-        string text when text.Contains(Constant.HolidayHouse) => Property.HolidayHouse,
-        string text when text.Contains(Constant.EmptyPlot) => Property.EmptyPlot,
-        string text when text.Contains(Constant.GardenPlot) => Property.GardenPlot,
-        _ => Property.PermanentAddress,
-    };
 
     public static Waste ToWaste(string code) => code switch
     {

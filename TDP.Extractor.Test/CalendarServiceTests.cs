@@ -24,7 +24,6 @@ public class CalendarServiceTests
         text.Should().NotBeEmpty();
         text.Should().Contain("id");
         text.Should().Contain("date");
-        text.Should().Contain("property");
         text.Should().Contain("waste");
         text.Should().Contain("area_id");
     }
@@ -40,19 +39,18 @@ public class CalendarServiceTests
 
         // Act
         service.Write(collections: [
-            new Domain.Model.Collection { Id = 1, AreaId = 1, Date = new DateOnly(2024, 11, 5), Property = Domain.Enum.Property.PermanentAddress, Waste = Domain.Enum.Waste.Solid },
-            new Domain.Model.Collection { Id = 2, AreaId = 1, Date = new DateOnly(2024, 11, 4), Property = Domain.Enum.Property.PermanentAddress, Waste = Domain.Enum.Waste.Recyclable }
+            new Domain.Model.Collection { Id = 1, AreaId = 1, Date = new DateOnly(2024, 11, 5), Waste = Domain.Enum.Waste.Solid },
+            new Domain.Model.Collection { Id = 2, AreaId = 1, Date = new DateOnly(2024, 11, 4), Waste = Domain.Enum.Waste.Recyclable }
         ]);
 
         // Assert
         string[] lines = fileSystem.File.ReadAllLines("Data/collections.csv");
         lines.Should().NotBeEmpty();
         lines.Length.Should().Be(3);
-        string[] properites = lines[1].Split(',');
-        Assert.AreEqual(expected: properites[0], actual: "1");
-        Assert.AreEqual(expected: properites[1], actual: "11/05/2024");
-        Assert.AreEqual(expected: properites[2], actual: "0");
-        Assert.AreEqual(expected: properites[3], actual: "3");
-        Assert.AreEqual(expected: properites[4], actual: "1");
+        string[] properties = lines[1].Split(',');
+        Assert.AreEqual(expected: properties[0], actual: "1");
+        Assert.AreEqual(expected: properties[1], actual: "11/05/2024");
+        Assert.AreEqual(expected: properties[2], actual: "0");
+        Assert.AreEqual(expected: properties[3], actual: "1");
     }
 }
