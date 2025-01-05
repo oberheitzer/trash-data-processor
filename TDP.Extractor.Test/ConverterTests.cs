@@ -19,25 +19,6 @@ public class ConverterTests
         Assert.AreEqual(expected: expected, actual: area);
     }
 
-    [DataTestMethod]
-    [DataRow("I", 1)]
-    [DataRow("IV", 4)]
-    [DataRow("XIII", 13)]
-    [DataRow("xiIi", 13)]
-    [DataRow("Zártkert", 17)]
-    [DataRow("zártkert", 17)]
-    public void ToAreaId_Should_Work(string area, int expected)
-    {
-        // Arrange
-        List<Area> areas = Builder.BuildAreas();
-
-        // Act
-        int areaId = Converter.ToAreaId(area: area, areas: areas);
-
-        // Assert
-        Assert.AreEqual(expected: expected, actual: areaId);
-    }
-
     [TestMethod]
     public void ToCollection_Should_Work()
     {
@@ -54,7 +35,7 @@ public class ConverterTests
         // Assert
         Assert.AreEqual(expected: new DateOnly(2024, 6, 15), actual: collection.Date);
         Assert.AreEqual(expected: 1, actual: collection.Id);
-        Assert.AreEqual(expected: 1, actual: collection.AreaId);
+        // TODO Assert.AreEqual(expected: 1, actual: collection.AreaId);
         Assert.AreEqual(expected: Waste.Solid, actual: collection.Waste);
     }
 

@@ -39,8 +39,8 @@ public class CalendarServiceTests
 
         // Act
         service.Write(collections: [
-            new Domain.Model.Collection { Id = 1, AreaId = 1, Date = new DateOnly(2024, 11, 5), Waste = Domain.Enum.Waste.Solid },
-            new Domain.Model.Collection { Id = 2, AreaId = 1, Date = new DateOnly(2024, 11, 4), Waste = Domain.Enum.Waste.Recyclable }
+            new Domain.Model.Collection { Id = 1, CalendarId = 1, Date = new DateOnly(2024, 11, 5), Waste = Domain.Enum.Waste.Solid },
+            new Domain.Model.Collection { Id = 2, CalendarId = 1, Date = new DateOnly(2024, 11, 4), Waste = Domain.Enum.Waste.Recyclable }
         ]);
 
         // Assert
