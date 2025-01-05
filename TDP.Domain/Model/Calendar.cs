@@ -1,7 +1,7 @@
 ﻿namespace TDP.Domain.Model;
 
 /// <summary>
-/// Metadata of a calendar.
+/// Describes a calendar.
 /// </summary>
 public class Calendar
 {
@@ -29,4 +29,9 @@ public class Calendar
     /// Navigation property.
     /// </summary>
     public Settlement Settlement { get; set; } = null!;
+
+    /// <summary>
+    /// Collections.
+    /// </summary>
+    public List<Collection> Collection { get; set; } = [];
 }

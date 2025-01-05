@@ -18,12 +18,12 @@ public class Street
     /// <summary>
     /// Foreign key.
     /// </summary>
-    public int? AreaId { get; set; }
+    public int CalendarId { get; set; }
 
     /// <summary>
     /// Navigation property.
     /// </summary>
-    public Area Area { get; set; } = null!;
+    public Calendar Calendar { get; set; } = null!;
 
     /// <summary>
     /// Foreign key.

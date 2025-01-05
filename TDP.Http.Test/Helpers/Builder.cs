@@ -6,16 +6,6 @@ namespace TDP.Http.Test;
 
 internal static class Builder
 {
-    internal static List<Area> BuildAreas()
-    {
-        return
-        [
-            new Area { Id = 1, Name = "I", SettlementId = 1 },
-            new Area { Id = 4, Name = "IV", SettlementId = 1 },
-            new Area { Id = 13, Name = "XIII", SettlementId = 1 },
-        ];
-    }
-
     internal static List<Calendar> BuildCalendars()
     {
         return
