@@ -32,9 +32,9 @@ public class Settlement
     public int? SettlementId { get; set; }
 
     /// <summary>
-    /// Areas.
+    /// Calendars.
     /// </summary>
-    public List<Area> Areas { get; set; } = [];
+    public List<Calendar> Calendars { get; set; } = [];
 
     /// <summary>
     /// Streets.
