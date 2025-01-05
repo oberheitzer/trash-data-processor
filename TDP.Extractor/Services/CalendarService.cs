@@ -23,28 +23,28 @@ internal sealed class CalendarService : ICalendarService
         _fileSystem = fileSystem;
     }
 
-    public IEnumerable<List<Collection>> Read(List<Area> areas, List<Domain.Model.Calendar> calendars)
+    public IEnumerable<List<Collection>> Read(List<Domain.Model.Calendar> calendars)
     {
         foreach (Domain.Model.Calendar info in calendars)
         {
-            (string calendar, int year, int areaId) = Extract(lines: GetLines(name: info.Name), areas: areas);
+            // (string calendar, int year, int areaId) = Extract(lines: GetLines(name: info.Name), areas: areas);
 
-            string[] dayLines = calendar.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
+            // string[] dayLines = calendar.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
             List<Collection> collections = [];
-            int dayIndex = 1;
+            // int dayIndex = 1;
 
-            foreach (string dayLine in dayLines)
-            {
-                ReadLine(
-                    collections: collections,
-                    line: dayLine,
-                    day: dayIndex,
-                    year: year,
-                    areaId: areaId
-                );
+            // foreach (string dayLine in dayLines)
+            // {
+            //     ReadLine(
+            //         collections: collections,
+            //         line: dayLine,
+            //         day: dayIndex,
+            //         year: year,
+            //         areaId: areaId
+            //     );
 
-                dayIndex++;
-            }
+            //     dayIndex++;
+            // }
 
             yield return collections;
         }
@@ -69,32 +69,32 @@ internal sealed class CalendarService : ICalendarService
     /// </summary>
     /// <param name="lines">All lines from the file.</param>
     /// <returns>The calendar lines, the year and the type of the property of waste collection.</returns>
-    private static (string calendar, int year, int areaId) Extract(string[] lines, List<Area> areas)
-    {
-        StringBuilder sb = new();
-        int areaId = 0;
-        int currentYear = DateTime.Now.Year;
-        foreach (string line in lines)
-        {
-            string dayString = line.Split(' ')[0];
-            bool isNumber = int.TryParse(dayString, out int day);
-            if (isNumber && day >= Constant.FirstDayOfMonth && day <= Constant.LastDayOfLongerMonth)
-            {
-                sb.AppendLine(line);
-            }
+    // private static (string calendar, int year, int areaId) Extract(string[] lines, List<Area> areas)
+    // {
+    //     StringBuilder sb = new();
+    //     int areaId = 0;
+    //     int currentYear = DateTime.Now.Year;
+    //     foreach (string line in lines)
+    //     {
+    //         string dayString = line.Split(' ')[0];
+    //         bool isNumber = int.TryParse(dayString, out int day);
+    //         if (isNumber && day >= Constant.FirstDayOfMonth && day <= Constant.LastDayOfLongerMonth)
+    //         {
+    //             sb.AppendLine(line);
+    //         }
 
-            if (line.Contains(Constant.WasteCalendar))
-            {
-                areaId = Converter.ToAreaId(area: Converter.ToArea(line: line), areas: areas);
-                bool isYear = int.TryParse(line.Substring(startIndex: 0, length: line.IndexOf('.')), out int year);
-                if (isYear && year >= currentYear)
-                {
-                    currentYear = year;
-                }
-            }
-        }
-        return (calendar: sb.ToString(), year: currentYear, areaId);
-    }
+    //         if (line.Contains(Constant.WasteCalendar))
+    //         {
+    //             areaId = Converter.ToAreaId(area: Converter.ToArea(line: line), areas: areas);
+    //             bool isYear = int.TryParse(line.Substring(startIndex: 0, length: line.IndexOf('.')), out int year);
+    //             if (isYear && year >= currentYear)
+    //             {
+    //                 currentYear = year;
+    //             }
+    //         }
+    //     }
+    //     return (calendar: sb.ToString(), year: currentYear, areaId);
+    // }
 
     /// <summary>
     /// Read the content of the PDF file and returns with the lines.
