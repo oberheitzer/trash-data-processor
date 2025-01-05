@@ -25,7 +25,7 @@ public class CalendarServiceTests
         text.Should().Contain("id");
         text.Should().Contain("date");
         text.Should().Contain("waste");
-        text.Should().Contain("area_id");
+        text.Should().Contain("calendar_id");
     }
 
     [TestMethod]
