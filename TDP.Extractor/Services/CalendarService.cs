@@ -31,104 +31,24 @@ internal sealed class CalendarService : ICalendarService
             if (_fileSystem.File.Exists(path: path))
             {
                 List<Collection> collections = [];
-
-                TestReadLines(lines: GetLines(path: path), collections: collections, calendarId: calendar.Id);
-
+                ReadLines(lines: GetLines(path: path), collections: collections, calendarId: calendar.Id);
                 yield return collections;
             }
-            // (string calendar, int year, int areaId) = Extract(lines: GetLines(name: info.Name), areas: areas);
-
-            // string[] dayLines = calendar.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
-            // List<Collection> collections = [];
-            // int dayIndex = 1;
-
-            // foreach (string dayLine in dayLines)
-            // {
-            //     ReadLine(
-            //         collections: collections,
-            //         line: dayLine,
-            //         day: dayIndex,
-            //         year: year,
-            //         areaId: areaId
-            //     );
-
-            //     dayIndex++;
-            // }
         }
     }
 
-    private void TestReadLines(string[] lines, List<Collection> collections, int calendarId)
+    public void Write(List<Collection> collections)
     {
-        bool hasRescheduledDays = false;
-        var rescheduledDays = new Dictionary<DateOnly, DateOnly>();
-        DayOfWeek? dayOfWeek = null;
-
-        for (int index = 0; index < lines.Length; index++)
+        string file = $"{_fileSystem.GetDirectoryPath(folderName: Shared.Constants.File.Data)}/{Shared.Constants.File.Collections}";
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
-            string line = lines[index];
-            if (line.Contains(Text.SolidWaste))
-            {
-                string[] lineParts = line.Split(separator: Separator.Colon);
-                string day = lineParts[1].Trim().ToLower();
-                dayOfWeek = Converter.ToDayOfWeek(day: day);
-            }
-
-            if (line.Contains(Text.RescheduledDays))
-            {
-                string[] lineParts = line.Split(separator: Separator.Colon);
-                string[] dates = lineParts[1].Trim().Split(separator: Text.InsteadOf);
-
-                AddDate(rescheduledDays: rescheduledDays, dates: dates);
-
-                hasRescheduledDays = true;
-            }
-
-            if (!hasRescheduledDays && line.Contains(Text.InsteadOf))
-            {
-                AddDate(rescheduledDays: rescheduledDays, dates: line.Trim().Split(separator: Text.InsteadOf));
-            }
-
-            if (line.StartsWith(Text.RecyclableWaste))
-            {
-                AddCollection(
-                    data: ExtractDays(line, lines, index),
-                    collections: collections,
-                    waste: Waste.Recyclable,
-                    calendarId: calendarId);
-            }
-
-            if (line.StartsWith(Text.OrganicWaste) && int.TryParse(line[Text.OrganicWaste.Length + 1].ToString(), out int _))
-            {
-                AddCollection(
-                    data: line.Substring(startIndex: Text.OrganicWaste.Length).Trim(),
-                    collections: collections,
-                    waste: Waste.Organic,
-                    calendarId: calendarId);
-            }
-        }
-
-        if (dayOfWeek != null)
-        {
-            AddCollection(
-                dayOfWeek: dayOfWeek.Value,
-                rescheduledDays: rescheduledDays,
-                collections: collections,
-                waste: Waste.Solid,
-                calendarId: calendarId);
-        }
-    }
-
-    private static string ExtractDays(string line, string[] lines, int index)
-    {
-        if (line.Length == Text.RecyclableWaste.Length)
-        {
-            return lines[index + 3] + Separator.Space + lines[index + 4];
-        }
-        else if (DateOnly.TryParse(line.Split(separator: Separator.Space)[1], out var _))
-        {
-            return lines[index + 1];
-        }
-        return line.Substring(startIndex: Text.RecyclableWaste.Length).Trim();
+            // Don't write the header again.
+            HasHeaderRecord = !_fileSystem.File.Exists(path: file),
+        };
+        using StreamWriter writer = _fileSystem.File.AppendText(path: file);
+        using CsvWriter csv = new(writer: writer, configuration: config);
+        csv.Context.RegisterClassMap<CollectionMapper>();
+        csv.WriteRecords(records: collections);
     }
 
     private void AddCollection(
@@ -206,21 +126,22 @@ internal sealed class CalendarService : ICalendarService
         string[] oldMonthAndDay = oldDate.Split(separator: Separator.Space);
         string[] newMonthAndDay = newDate.Split(separator: Separator.Space);
 
-        // var oldCollectionDate = ToDate(month: oldMonthAndDay[0], day: oldMonthAndDay[1]);
-        // new DateOnly(
-        //     year: 2025,
-        //     month: Converter.ToMonthIndex(oldMonthAndDay[0].ToLower()),
-        //     day: int.Parse(oldMonthAndDay[1]));
-
-        // var newCollectionDate = ToDate(month: newMonthAndDay[0], day: newMonthAndDay[1]);
-        // new DateOnly(
-        //     year: 2025,
-        //     month: Converter.ToMonthIndex(newMonthAndDay[0].ToLower()),
-        //     day: int.Parse(newMonthAndDay[1]));
-
         rescheduledDays.Add(
             key: ToDate(month: oldMonthAndDay[0], day: oldMonthAndDay[1]),
             value: ToDate(month: newMonthAndDay[0], day: newMonthAndDay[1]));
+    }
+
+    private static string ExtractDays(string line, string[] lines, int index)
+    {
+        if (line.Length == Text.RecyclableWaste.Length)
+        {
+            return lines[index + 3] + Separator.Space + lines[index + 4];
+        }
+        else if (DateOnly.TryParse(line.Split(separator: Separator.Space)[1], out var _))
+        {
+            return lines[index + 1];
+        }
+        return line.Substring(startIndex: Text.RecyclableWaste.Length).Trim();
     }
 
     /// <summary>
@@ -235,135 +156,76 @@ internal sealed class CalendarService : ICalendarService
         return text.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries);
     }
 
+    /// <summary>
+    /// Read lines.
+    /// </summary>
+    /// <param name="lines">Content of the PDF file.</param>
+    /// <param name="collections">Collection days.</param>
+    /// <param name="calendarId">Unique identifier of the calendar.</param>
+    private void ReadLines(string[] lines, List<Collection> collections, int calendarId)
+    {
+        bool hasRescheduledDays = false;
+        var rescheduledDays = new Dictionary<DateOnly, DateOnly>();
+        DayOfWeek? dayOfWeek = null;
+
+        for (int index = 0; index < lines.Length; index++)
+        {
+            string line = lines[index];
+            if (line.Contains(Text.SolidWaste))
+            {
+                string[] lineParts = line.Split(separator: Separator.Colon);
+                string day = lineParts[1].Trim().ToLower();
+                dayOfWeek = Converter.ToDayOfWeek(day: day);
+            }
+
+            if (line.Contains(Text.RescheduledDays))
+            {
+                string[] lineParts = line.Split(separator: Separator.Colon);
+                string[] dates = lineParts[1].Trim().Split(separator: Text.InsteadOf);
+
+                AddDate(rescheduledDays: rescheduledDays, dates: dates);
+
+                hasRescheduledDays = true;
+            }
+
+            if (!hasRescheduledDays && line.Contains(Text.InsteadOf))
+            {
+                AddDate(rescheduledDays: rescheduledDays, dates: line.Trim().Split(separator: Text.InsteadOf));
+            }
+
+            if (line.StartsWith(Text.RecyclableWaste))
+            {
+                AddCollection(
+                    data: ExtractDays(line, lines, index),
+                    collections: collections,
+                    waste: Waste.Recyclable,
+                    calendarId: calendarId);
+            }
+
+            if (line.StartsWith(Text.OrganicWaste) && int.TryParse(line[Text.OrganicWaste.Length + 1].ToString(), out int _))
+            {
+                AddCollection(
+                    data: line.Substring(startIndex: Text.OrganicWaste.Length).Trim(),
+                    collections: collections,
+                    waste: Waste.Organic,
+                    calendarId: calendarId);
+            }
+        }
+
+        if (dayOfWeek != null)
+        {
+            AddCollection(
+                dayOfWeek: dayOfWeek.Value,
+                rescheduledDays: rescheduledDays,
+                collections: collections,
+                waste: Waste.Solid,
+                calendarId: calendarId);
+        }
+    }
+
     private static DateOnly ToDate(string month, string day)
         => new(
             year: 2025,
             month: Converter.ToMonthIndex(month: month.ToLower()),
             day: int.Parse(day));
-
-    public void Write(List<Collection> collections)
-    {
-        string file = $"{_fileSystem.GetDirectoryPath(folderName: Shared.Constants.File.Data)}/{Shared.Constants.File.Collections}";
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-        {
-            // Don't write the header again.
-            HasHeaderRecord = !_fileSystem.File.Exists(path: file),
-        };
-        using StreamWriter writer = _fileSystem.File.AppendText(path: file);
-        using CsvWriter csv = new(writer: writer, configuration: config);
-        csv.Context.RegisterClassMap<CollectionMapper>();
-        csv.WriteRecords(records: collections);
-    }
-
-    /*
-
-    /// <summary>
-    /// Extract the necessary data from the downloaded PDF file.
-    /// </summary>
-    /// <param name="lines">All lines from the file.</param>
-    /// <returns>The calendar lines, the year and the type of the property of waste collection.</returns>
-    // private static (string calendar, int year, int areaId) Extract(string[] lines, List<Area> areas)
-    // {
-    //     StringBuilder sb = new();
-    //     int areaId = 0;
-    //     int currentYear = DateTime.Now.Year;
-    //     foreach (string line in lines)
-    //     {
-    //         string dayString = line.Split(' ')[0];
-    //         bool isNumber = int.TryParse(dayString, out int day);
-    //         if (isNumber && day >= Constant.FirstDayOfMonth && day <= Constant.LastDayOfLongerMonth)
-    //         {
-    //             sb.AppendLine(line);
-    //         }
-
-    //         if (line.Contains(Constant.WasteCalendar))
-    //         {
-    //             areaId = Converter.ToAreaId(area: Converter.ToArea(line: line), areas: areas);
-    //             bool isYear = int.TryParse(line.Substring(startIndex: 0, length: line.IndexOf('.')), out int year);
-    //             if (isYear && year >= currentYear)
-    //             {
-    //                 currentYear = year;
-    //             }
-    //         }
-    //     }
-    //     return (calendar: sb.ToString(), year: currentYear, areaId);
-    // }
-
-
-    /// <summary>
-    /// Increases the value of a month based on its days' amount.
-    /// </summary>
-    /// <param name="month">Previous month.</param>
-    /// <param name="day">Day of the month.</param>
-    /// <param name="index">One of the days when waste collection happens.</param>
-    /// <param name="year">Current year.</param>
-    private static void Increase(ref int month, int day, int index, int year)
-    {
-        if ((index == Constant.IndexOfJanuary && (day == Constant.LastDayOfShorterMonth || (!DateTime.IsLeapYear(year) && day == Constant.LastDayOfShortestMonthInLeapYear))) ||
-            (day == Constant.LastDayOfLongerMonth && index != Constant.IndexOfJuly))
-        {
-            month += 2;
-        }
-        else
-        {
-            month++;
-        }
-    }
-
-    /// <summary>
-    /// Adds an instance to the list of Collections.
-    /// </summary>
-    /// <param name="collections">The list of collection days.</param>
-    /// <param name="collectionTypes">The types of collection on a specific day.</param>
-    /// <param name="year">Year.</param>
-    /// <param name="month">Month.</param>
-    /// <param name="dayIndex">Day.</param>
-    /// <param name="property">The type of property.</param>
-    private void Insert(List<Collection> collections, string[] collectionTypes, int year, int month, int dayIndex, int areaId)
-    {
-        for (int i = 1; i < collectionTypes.Length; i++)
-        {
-            collections.Add(Converter.ToCollection(
-                year: year,
-                month: month,
-                day: dayIndex,
-                code: collectionTypes[i],
-                areaId: areaId,
-                id: _id++
-            ));
-        }
-    }
-
-    /// <summary>
-    /// Reads a line.
-    /// </summary>
-    /// <param name="collections">The list of collection days.</param>
-    /// <param name="line">Current line.</param>
-    /// <param name="day">Day.</param>
-    /// <param name="year">Year.</param>
-    /// <param name="property">The type of property.</param>
-    private void ReadLine(List<Collection> collections, string line, int day, int year, int areaId)
-    {
-        int month = 1;
-        string[] days = line.Split(day.ToString());
-        for (int index = 1; index < days.Length; index++)
-        {
-            string[] collectionTypes = days[index].Trim().Split(' ');
-            if (collectionTypes.Length > 1)
-            {
-                Insert(
-                    collections: collections,
-                    collectionTypes: collectionTypes,
-                    year: year,
-                    month: month,
-                    dayIndex: day,
-                    areaId: areaId
-                );
-            }
-
-            Increase(month: ref month, day: day, index: index, year: year);
-        }
-    }
-
-    */
 }
