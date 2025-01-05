@@ -23,15 +23,6 @@ public static class Converter
     }
 
     /// <summary>
-    /// Finds and returns the identifier of the area based of its given name.
-    /// </summary>
-    /// <param name="area">Name of the area.</param>
-    /// <param name="areas">List of areas.</param>
-    /// <returns>The identifier of the area.</returns>
-    public static int ToAreaId(string area, List<Area> areas)
-        => areas.Single(a => area.ToLower() == a.Name.ToLower()).Id;
-
-    /// <summary>
     /// Creates and instance of the Collection class.
     /// </summary>
     /// <param name="year">Year of collection.</param>
@@ -44,7 +35,6 @@ public static class Converter
     {
         return new Collection
         {
-            AreaId = areaId,
             Date = new DateOnly(year: year, month: month, day: day),
             Id = id,
             Waste = ToWaste(code: code)
