@@ -19,16 +19,6 @@ internal sealed class DatabaseService : IDatabaseService
         };
     }
 
-    public async Task<List<Area>> GetAreasAsync()
-    {
-        var response = await _httpClient.GetAsync(requestUri: Constant.AreaUri);
-        var options = new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
-        };
-        return JsonSerializer.Deserialize<List<Area>>(json: await response.Content.ReadAsStringAsync(), options: options) ?? [];
-    }
-
     public async Task<List<Calendar>> GetCalendarsAsync()
     {
         var response = await _httpClient.GetAsync(requestUri: Constant.CalendarUri);
