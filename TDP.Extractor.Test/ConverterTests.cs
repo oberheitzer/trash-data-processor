@@ -1,10 +1,60 @@
-﻿using TDP.Extractor.Helpers;
+﻿using TDP.Domain.Model;
+using TDP.Extractor.Helpers;
 
 namespace TDP.Extractor.Test;
 
 [TestClass]
 public class ConverterTests
 {
+    [TestMethod]
+    public void ToCollection_Should_Work()
+    {
+        // Arrange & Act
+        Collection collection = Converter.ToCollection(
+            id: 1,
+            calendarId: 1,
+            monthIndex: 12,
+            day: 31,
+            waste: Domain.Enum.Waste.Solid
+        );
+
+        // Assert
+        Assert.AreEqual(expected: 1, actual: collection.Id);
+        Assert.AreEqual(expected: 1, actual: collection.CalendarId);
+        Assert.AreEqual(expected: Domain.Enum.Waste.Solid, actual: collection.Waste);
+        Assert.AreEqual(expected: new DateOnly(2025, 12, 31), actual: collection.Date);
+    }
+
+    [TestMethod]
+    public void ToCollection_Without_Date_Should_Work()
+    {
+        // Arrange & Act
+        Collection collection = Converter.ToCollection(
+            id: 1,
+            calendarId: 1,
+            waste: Domain.Enum.Waste.Solid
+        );
+
+        // Assert
+        Assert.AreEqual(expected: 1, actual: collection.Id);
+        Assert.AreEqual(expected: 1, actual: collection.CalendarId);
+        Assert.AreEqual(expected: Domain.Enum.Waste.Solid, actual: collection.Waste);
+        Assert.AreEqual(expected: DateOnly.MinValue , actual: collection.Date);
+    }
+
+    [TestMethod]
+    public void ToDate_Should_Work()
+    {
+        // Arrange & Act
+        DateOnly date = Converter.ToDate(
+            month: "December",
+            day: "31"
+        );
+
+        // Assert
+        Assert.AreEqual(expected: new DateOnly(2025,12,31), actual: date);
+    }
+
     [DataTestMethod]
     [DataRow("hétfő", DayOfWeek.Monday)]
     [DataRow("Kedd", DayOfWeek.Tuesday)]
