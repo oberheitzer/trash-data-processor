@@ -53,6 +53,14 @@ internal sealed class CalendarService : ICalendarService
         csv.WriteRecords(records: collections);
     }
 
+    /// <summary>
+    /// Inserts the dates of a specific day in the whole year.
+    /// </summary>
+    /// <param name="dayOfWeek">Day of week when the collection happens.</param>
+    /// <param name="rescheduledDays">Rescheduled days.</param>
+    /// <param name="collections">Collections days.</param>
+    /// <param name="waste">The type of waste.</param>
+    /// <param name="calendarId">Unique identifier of Calendar.</param>
     private void AddCollection(
         DayOfWeek dayOfWeek,
         Dictionary<DateOnly, DateOnly> rescheduledDays,
@@ -86,6 +94,13 @@ internal sealed class CalendarService : ICalendarService
         }
     }
 
+    /// <summary>
+    /// Extracts and inserts the days of collection.
+    /// </summary>
+    /// <param name="data">The days.</param>
+    /// <param name="collections">Collection days.</param>
+    /// <param name="waste">The type of the waste.</param>
+    /// <param name="calendarId">Unique identifier of Calendar.</param>
     private void AddCollection(
         string data,
         List<Collection> collections,
@@ -114,6 +129,11 @@ internal sealed class CalendarService : ICalendarService
         }
     }
 
+    /// <summary>
+    /// Inserts a date pair into collection which stores the rescheduled days.
+    /// </summary>
+    /// <param name="rescheduledDays">Key-value collections which holds the rescheduled dates.</param>
+    /// <param name="dates">The old and the new value.</param>
     private static void AddDate(Dictionary<DateOnly, DateOnly> rescheduledDays, string[] dates)
     {
         string oldDate = dates[0].Substring(startIndex: 0, length: dates[0].IndexOf(value: Separator.Dot));
@@ -127,6 +147,14 @@ internal sealed class CalendarService : ICalendarService
             value: Converter.ToDate(month: newMonthAndDay[0], day: newMonthAndDay[1]));
     }
 
+    /// <summary>
+    /// Returns the waste collection days.
+    /// There are some cases when the days are not in the same line.
+    /// </summary>
+    /// <param name="line">The current line.</param>
+    /// <param name="lines">All of the lines in the PDF files.</param>
+    /// <param name="index">Current iteration.</param>
+    /// <returns></returns>
     private static string ExtractDays(string line, string[] lines, int index)
     {
         if (line.Length == Text.RecyclableWaste.Length)
