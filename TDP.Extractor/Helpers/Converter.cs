@@ -2,7 +2,7 @@
 
 public static class Converter
 {
-    public static DayOfWeek ToDayOfWeek(string day) => day switch
+    public static DayOfWeek ToDayOfWeek(string day) => day.ToLower() switch
     {
         Week.Monday => DayOfWeek.Monday,
         Week.Tuesday => DayOfWeek.Tuesday,
@@ -14,7 +14,7 @@ public static class Converter
         _ => throw new ArgumentOutOfRangeException($"Unexpected name of a day: {day}")
     };
 
-    public static int ToMonthIndex(string month) => month switch
+    public static int ToMonthIndex(string month) => month.ToLower() switch
     {
         Month.January => 1,
         Month.February => 2,
