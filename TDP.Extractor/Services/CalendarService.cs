@@ -72,12 +72,7 @@ internal sealed class CalendarService : ICalendarService
 
         while (current <= lastDay)
         {
-            var collection = new Collection
-            {
-                Id = Id++,
-                CalendarId = calendarId,
-                Waste = waste
-            };
+            var collection = Converter.ToCollection(id: Id++, calendarId: calendarId, waste: waste);
             if (rescheduledDays.TryGetValue(current, out DateOnly value))
             {
                 collection.Date = value;
@@ -107,13 +102,12 @@ internal sealed class CalendarService : ICalendarService
             {
                 if (int.TryParse(days[i], out int day))
                 {
-                    collections.Add(new Collection
-                    {
-                        Id = Id++,
-                        CalendarId = calendarId,
-                        Date = new DateOnly(year: 2025, month: monthIndex, day: day),
-                        Waste = waste
-                    });
+                    collections.Add(Converter.ToCollection(
+                        id: Id++,
+                        calendarId: calendarId,
+                        monthIndex: monthIndex,
+                        day: day,
+                        waste: waste));
                 }
             }
             monthIndex++;
@@ -129,8 +123,8 @@ internal sealed class CalendarService : ICalendarService
         string[] newMonthAndDay = newDate.Split(separator: Separator.Space);
 
         rescheduledDays.Add(
-            key: ToDate(month: oldMonthAndDay[0], day: oldMonthAndDay[1]),
-            value: ToDate(month: newMonthAndDay[0], day: newMonthAndDay[1]));
+            key: Converter.ToDate(month: oldMonthAndDay[0], day: oldMonthAndDay[1]),
+            value: Converter.ToDate(month: newMonthAndDay[0], day: newMonthAndDay[1]));
     }
 
     private static string ExtractDays(string line, string[] lines, int index)
@@ -224,10 +218,4 @@ internal sealed class CalendarService : ICalendarService
                 calendarId: calendarId);
         }
     }
-
-    private static DateOnly ToDate(string month, string day)
-        => new(
-            year: 2025,
-            month: Converter.ToMonthIndex(month: month),
-            day: int.Parse(day));
 }
