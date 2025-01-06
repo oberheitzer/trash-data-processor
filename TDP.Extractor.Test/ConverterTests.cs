@@ -7,7 +7,10 @@ public class ConverterTests
 {
     [DataTestMethod]
     [DataRow("hétfő", DayOfWeek.Monday)]
+    [DataRow("Kedd", DayOfWeek.Tuesday)]
     [DataRow("szerda", DayOfWeek.Wednesday)]
+    [DataRow("CSÜTÖRTÖK", DayOfWeek.Thursday)]
+    [DataRow("PéNtEk", DayOfWeek.Friday)]
     [DataRow("vasárnap", DayOfWeek.Sunday)]
     public void ToDayOfWeek_Should_Work(string day, DayOfWeek expected)
     {
@@ -19,7 +22,6 @@ public class ConverterTests
     }
 
     [DataTestMethod]
-    [DataRow("Hétfő")]
     [DataRow("test")]
     public void ToDayOfWeek_Should_Throw_Exception(string day)
     {
@@ -33,7 +35,10 @@ public class ConverterTests
 
     [DataTestMethod]
     [DataRow("január", 1)]
+    [DataRow("Április", 4)]
     [DataRow("május", 5)]
+    [DataRow("aUgUszTuS", 8)]
+    [DataRow("OKTÓBER", 10)]
     [DataRow("december", 12)]
     public void ToMonthIndex_Should_Work(string month, int expected)
     {
@@ -45,7 +50,6 @@ public class ConverterTests
     }
 
     [DataTestMethod]
-    [DataRow("Április")]
     [DataRow("test")]
     public void ToMonthIndex_Should_Throw_Exception(string month)
     {
