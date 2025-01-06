@@ -174,7 +174,7 @@ internal sealed class CalendarService : ICalendarService
             if (line.Contains(Text.SolidWaste))
             {
                 string[] lineParts = line.Split(separator: Separator.Colon);
-                string day = lineParts[1].Trim().ToLower();
+                string day = lineParts[1].Trim();
                 dayOfWeek = Converter.ToDayOfWeek(day: day);
             }
 
@@ -226,6 +226,6 @@ internal sealed class CalendarService : ICalendarService
     private static DateOnly ToDate(string month, string day)
         => new(
             year: 2025,
-            month: Converter.ToMonthIndex(month: month.ToLower()),
+            month: Converter.ToMonthIndex(month: month),
             day: int.Parse(day));
 }
