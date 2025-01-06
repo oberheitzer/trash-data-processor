@@ -14,7 +14,9 @@ namespace TDP.Extractor.Services;
 
 internal sealed class CalendarService : ICalendarService
 {
-    private int _id = 1;
+    private int Id = 1;
+    private readonly int OneDay = 1;
+    private readonly int SevenDays = 7;
 
     private readonly IFileSystem _fileSystem;
 
@@ -65,14 +67,14 @@ internal sealed class CalendarService : ICalendarService
 
         while (current.DayOfWeek != dayOfWeek)
         {
-            current = current.AddDays(1);
+            current = current.AddDays(value: OneDay);
         }
 
         while (current <= lastDay)
         {
             var collection = new Collection
             {
-                Id = _id++,
+                Id = Id++,
                 CalendarId = calendarId,
                 Waste = waste
             };
@@ -85,7 +87,7 @@ internal sealed class CalendarService : ICalendarService
                 collection.Date = current;
             }
             collections.Add(collection);
-            current = current.AddDays(7);
+            current = current.AddDays(value: SevenDays);
         }
     }
 
@@ -107,7 +109,7 @@ internal sealed class CalendarService : ICalendarService
                 {
                     collections.Add(new Collection
                     {
-                        Id = _id++,
+                        Id = Id++,
                         CalendarId = calendarId,
                         Date = new DateOnly(year: 2025, month: monthIndex, day: day),
                         Waste = waste
